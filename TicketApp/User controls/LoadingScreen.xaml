@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="TicketApp.User_controls.LoadingScreen"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:local="clr-namespace:TicketApp.User_controls"
+			 xmlns:fa="http://schemas.fontawesome.io/icons/"
+			 mc:Ignorable="d" 
+			 Height="550" Width="350" Background="#FF4C4C4C">
+	<UserControl.Resources>
+		<Style x:Key="LabelTitle" TargetType="{x:Type Label}">
+			<Setter Property="FontFamily" Value="pack://application:,,,/font/#Montserrat Bold"/>
+			<Setter Property="Foreground" Value="#FF4C4C4C"/>
+			<Setter Property="FontSize" Value="20"/>
+			<Setter Property="Margin" Value="0,5,0,0"/>
+			<Setter Property="BorderBrush" Value="#FF002B71"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+			<Setter Property="VerticalAlignment" Value="Top"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+		</Style>
+	</UserControl.Resources>
+	<Grid>
+		<fa:ImageAwesome Foreground="#FFFFFFFF" Icon="Refresh" Spin="True" Height="64" Width="64" Margin="146,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+			<Label x:Name="LoadingLabel" Style="{DynamicResource LabelTitle}" Content="Loading data..." Margin="0,275,0,0" Height="30" Foreground="#FFFFFFFF" HorizontalAlignment="Stretch"/>
+	</Grid>
+</UserControl>

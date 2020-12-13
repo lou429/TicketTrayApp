@@ -19,7 +19,7 @@ namespace TrayIcon
         private void StartTicketApp(object sender, RoutedEventArgs routedEventArgs)
         {
             Process firstProc = new Process();
-            firstProc.StartInfo.FileName = "TicketApp.exe";
+            firstProc.StartInfo.FileName = "C:\\Users\\sebas\\OneDrive - Millennium Ltd\\Ticket creator\\TicketTrayApp\\TicketApp\\bin\\Debug\\Ticket creator.exe";
             firstProc.EnableRaisingEvents = true;
             firstProc.Start();
         }
