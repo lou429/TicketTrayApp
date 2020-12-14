@@ -41,12 +41,12 @@
         <Image Grid.Row="0" Margin="0,0,0,65" Source="/images/logo.png" Height="110" VerticalAlignment="Bottom" Grid.RowSpan="1" Grid.ColumnSpan="2"/>
         <Label Grid.Row="0" Style="{DynamicResource LabelTitle}" FontSize="24px" Content="Making IT easy" Margin="26,0,26,28.2" VerticalAlignment="Bottom" Height="37" HorizontalAlignment="Stretch"/>
         <Label Grid.Row="1" Content="Heading of the case:" Style="{DynamicResource LabelTitle}"/>
-        <TextBox Name="HeaderField" Text="Enter heading..." Grid.Row="1" TabIndex="1" Grid.ColumnSpan="2" Margin="40,49.8,39.6,20.2" GotFocus="Field_OnGotFocus" LostFocus="Field_OnLostFocus"/>
+        <TextBox Name="HeaderField" Text="Enter heading..." Grid.Row="1" TabIndex="1" Grid.ColumnSpan="2" Margin="40,49.8,39.6,20.2" GotFocus="FieldModifyState" LostFocus="FieldModifyState"/>
         <Label Grid.Row="2" Style="{DynamicResource LabelTitle}" Content="More info about the issue:"/>
-        <TextBox Name="BodyField" Text="Enter body..." Grid.Row="2" TabIndex="2" Grid.ColumnSpan="2" Margin="40,49.8,39.6,19.8" GotFocus="Field_OnGotFocus" LostFocus="Field_OnLostFocus"/>
-        <Border Grid.Row="3" CornerRadius="20" Background="#FFFFFFFF" Margin="90,20,90,80" BorderBrush="#FF002B71" BorderThickness="2" MouseEnter="SendButton_OnMouseEnter" MouseLeave="SendButton_OnMouseLeave">
+        <TextBox Name="BodyField" Text="Enter body..." Grid.Row="2" TabIndex="2" Grid.ColumnSpan="2" Margin="40,49.8,39.6,19.8" GotFocus="FieldModifyState" LostFocus="FieldModifyState"/>
+        <Border Grid.Row="3" CornerRadius="20" Background="#FFFFFFFF" Margin="90,20,90,80" BorderBrush="#FF002B71" BorderThickness="2" MouseEnter="ButtonModifyState" MouseLeave="ButtonModifyState">
             <Label Name="SendButton" FontSize="18" Cursor="Hand" Content="Send" Foreground="#FF4C4C4C" TabIndex="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="pack://application:,,,/font/#Montserrat Bold" MouseDown="SendTicket"/>
         </Border>
-        <Image Name="Settingslcon" Grid.Row="3" Margin="70,80,70,20" Cursor="Hand" Source="../images/cog.png" Grid.ColumnSpan="2" MouseEnter="Settings_OhMouseEnter" MouseLeave="Settings_OhMouseLeave" MouseDown="Settings_MouseDown"/>
+        <Image Name="Settingslcon" Grid.Row="3" Margin="70,80,70,20" Cursor="Hand" Source="../images/cog.png" Grid.ColumnSpan="2" MouseEnter="SettingsModifyState" MouseLeave="SettingsModifyState" MouseDown="Settings_MouseDown"/>
     </Grid>
 </UserControl>

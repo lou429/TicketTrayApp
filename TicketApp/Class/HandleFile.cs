@@ -11,6 +11,7 @@ using System.Windows.Documents;
 using EllipticCurve;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using TicketApp.Class;
 using WPFCustomMessageBox;
 
 namespace TicketApp
@@ -21,12 +22,12 @@ namespace TicketApp
     public class DataInfo
     {
         internal UserInfo UserInfo { get; set; }
-        internal List<Form> Form { get; set; }
+        internal List<EmailMsg> EmailMsg { get; set; }
 
-        public DataInfo(UserInfo userInfo, List<Form> form)
+        public DataInfo(UserInfo userInfo, List<EmailMsg> emailMsg)
         {
             UserInfo = userInfo;
-            Form = form;
+            EmailMsg = emailMsg;
         }
 
         public DataInfo()
@@ -34,14 +35,14 @@ namespace TicketApp
 
         }
 
-        public void Add(Form form)
+        public void Add(EmailMsg emailMsg)
         {
-            if (Form == null)
-                Form = new List<Form>();
-            Form.Add(form);
+            if (EmailMsg == null)
+                EmailMsg = new List<EmailMsg>();
+            EmailMsg.Add(emailMsg);
         }
 
-        public void Add(string heading, string body) => Add(new Form(heading, body));
+        public void Add(string heading, string body) => Add(new EmailMsg(heading, body));
     }
 
     class HandleFile
@@ -53,10 +54,10 @@ namespace TicketApp
             return Save<List<string>>(errorList);
         }
 
-        public bool Save(Form form)
+        public bool Save(EmailMsg emailMsg)
         {
             var data = Load<DataInfo>() ?? new DataInfo();
-            data.Add(form);
+            data.Add(emailMsg);
             return Save<DataInfo>(data);
         }
 

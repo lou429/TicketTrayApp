@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -40,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>8.0</LangVersion>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -99,6 +100,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class\APIKeys.cs" />
+    <Compile Include="Class\APIKeysLocal.cs" />
+    <Compile Include="Class\Email.cs" />
     <Compile Include="Class\HandleFile.cs" />
     <Compile Include="User controls\DeviceInfo.xaml.cs">
       <DependentUpon>DeviceInfo.xaml</DependentUpon>
@@ -125,7 +129,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Class\Form.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -210,4 +213,11 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir)Class\
+
+if not exist APIKeysLocal.cs (
+    type nul &gt; APIKeysLocal.cs
+)</PreBuildEvent>
+  </PropertyGroup>
 </Project>

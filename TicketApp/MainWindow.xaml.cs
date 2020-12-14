@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TicketApp.Class;
 using TicketApp.User_controls;
 using WPFCustomMessageBox;
 
@@ -23,10 +25,7 @@ namespace TicketApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly string _startingHead;
-        private readonly string _startingBody;
-        public UserInfo UserInfo;
-        public Form Form;
+        public static DataInfo DataInfo;
 
         public MainWindow()
         {
@@ -34,7 +33,19 @@ namespace TicketApp
             InitializeComponent();
             CheckRunningApp();
 
-            Switcher.Switch(new MainPage());
+            try
+            {
+                var data = new HandleFile();
+                var dataInfo = data.Load<DataInfo>();
+                DataInfo = dataInfo ?? new DataInfo();
+            }
+            catch (Exception ex)
+            {
+                var _ = new Error(ex);
+                DataInfo = new DataInfo();
+            }
+
+            Switcher.Switch(new MainPage(DataInfo));
         }
         
         /// <summary>
@@ -91,6 +102,27 @@ namespace TicketApp
         public void Navigate(UserControl newPage)
         {
             this.Content = newPage;
+        }
+
+        private async Task<bool> SendEmail(EmailMsg message)
+        {
+            try
+            {
+                var result = await Email.SendEmailForm(message);
+                if (result.StatusCode == HttpStatusCode.Accepted)
+                {
+                    //LoadingLabel.Content = "Sent successfully";
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message failed to send\nEnsure you are connected to the internet",
+                    "Message send error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var _ = new Error(ex);
+                return false;
+            }
         }
     }
 }

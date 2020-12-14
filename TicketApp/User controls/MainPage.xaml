@@ -47,14 +47,15 @@
                 <RowDefinition Height="20*"/>
                 <RowDefinition Height="22*"/>
                 <RowDefinition Height="136"/>
-            </Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
             <Image Grid.Row="0" Margin="0,0,0,65" Source="/images/logo.png" Height="110" VerticalAlignment="Bottom" Grid.RowSpan="1" Grid.ColumnSpan="2"/>
             <Label Grid.Row="0" Style="{DynamicResource LabelTitle}" FontSize="24px" Content="Making IT easy" Margin="26,0,26,28.2" VerticalAlignment="Bottom" Height="37" HorizontalAlignment="Stretch"/>
             <Label Grid.Row="1" Content="Heading of the case:" Style="{DynamicResource LabelTitle}" ToolTip="This will be the heading of your case, this should be a quick description of the issue"/>
-            <TextBox Name="HeaderField" Text="Enter heading..." Grid.Row="1" TabIndex="1" Grid.ColumnSpan="2" Margin="40,49.8,39.6,20.2" GotFocus="Field_OnGotFocus" LostFocus="Field_OnLostFocus"/>
+        <TextBox Name="HeaderField" Text="Enter heading..." Grid.Row="1" TabIndex="1" Grid.ColumnSpan="2" Margin="40,49.8,39.6,20.2" GotFocus="ModifyFieldFocus" LostFocus="ModifyFieldFocus"/>
             <Label Grid.Row="2" Style="{DynamicResource LabelTitle}" Content="More info about the issue:" ToolTip="This will a description of what issue you are currently having"/>
-            <TextBox Name="BodyField" Text="Enter body..." Grid.Row="2" TabIndex="2" Grid.ColumnSpan="2" Margin="40,49.8,39.6,19.8" GotFocus="Field_OnGotFocus" LostFocus="Field_OnLostFocus"/>
+        <TextBox Name="BodyField" Text="Enter body..." Grid.Row="2" TabIndex="2" Grid.ColumnSpan="2" Margin="40,49.8,39.6,19.8" GotFocus="ModifyFieldFocus" LostFocus="ModifyFieldFocus"/>
             <Border Grid.Row="3" CornerRadius="20" Background="#FFFFFFFF" Margin="90,20,90,80" BorderBrush="#FF002B71" BorderThickness="2" MouseEnter="SendButton_OnMouseEnter" MouseLeave="SendButton_OnMouseLeave">
                 <Label Name="SendButton" FontSize="18" Cursor="Hand" Content="Send" Foreground="#FF4C4C4C" TabIndex="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="pack://application:,,,/font/#Montserrat Bold" MouseDown="SendTicket"/>
             </Border>

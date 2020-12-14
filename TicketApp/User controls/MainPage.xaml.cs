@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TicketApp.Class;
 
 namespace TicketApp.User_controls
 {
@@ -22,44 +23,51 @@ namespace TicketApp.User_controls
     {
         private readonly string _startingHead;
         private readonly string _startingBody;
-        public UserInfo UserInfo;
-        public Form Form;
+        private DataInfo DataInfo;
 
-        public MainPage()
+        public MainPage(DataInfo dataInfo)
         {
             InitializeComponent();
             _startingHead = HeaderField.Text;
             _startingBody = BodyField.Text;
-            try
-            {
-                var data = new HandleFile();
-                var dataInfo = data.Load<DataInfo>();
-                UserInfo = dataInfo.UserInfo;
-            }
-            catch (Exception ex)
-            {
-                var _ = new Error(ex);
-            }
+
+            DataInfo = dataInfo;
         }
 
-        private void Field_OnGotFocus(object sender, RoutedEventArgs e)
+        public MainPage()
         {
-            if (((TextBox) sender).Text == _startingHead || ((TextBox) sender).Text == _startingBody)
-            {
-                ((TextBox) sender).Text = "";
-                ((TextBox) sender).Foreground = Brushes.Black;
-                ((TextBox) sender).BorderThickness = new Thickness(0, 0, 0, 3);
-            }
+            InitializeComponent();
         }
 
-        private void Field_OnLostFocus(object sender, RoutedEventArgs e)
+        //private void Field_OnGotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (((TextBox) sender).Text == _startingHead || ((TextBox) sender).Text == _startingBody)
+        //    {
+        //        ((TextBox) sender).Text = "";
+        //        ((TextBox) sender).Foreground = Brushes.Black;
+        //        ((TextBox) sender).BorderThickness = new Thickness(0, 0, 0, 3);
+        //    }
+        //}
+
+        //private void Field_OnLostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (((TextBox) sender).Text == "")
+        //    {
+        //        ((TextBox) sender).Text = ((TextBox) sender).TabIndex == 1 ? _startingHead : _startingBody;
+        //        ((TextBox) sender).Foreground = Brushes.Gray;
+        //        ((TextBox) sender).BorderThickness = new Thickness(0, 0, 0, 1);
+        //    }
+        //}
+
+        private void ModifyFieldFocus(object sender, RoutedEventArgs e)
         {
-            if (((TextBox) sender).Text == "")
-            {
-                ((TextBox) sender).Text = ((TextBox) sender).TabIndex == 1 ? _startingHead : _startingBody;
-                ((TextBox) sender).Foreground = Brushes.Gray;
-                ((TextBox) sender).BorderThickness = new Thickness(0, 0, 0, 1);
-            }
+            var senderTextBox = ((TextBox) sender);
+            if (senderTextBox.Text != "" && senderTextBox.Text != _startingBody && senderTextBox.Text != _startingHead)
+                return;
+            bool state = senderTextBox.Text == "";
+            senderTextBox.Text = state ? (senderTextBox.TabIndex == 1 ? _startingHead : _startingBody) : "";
+            senderTextBox.Foreground = state ? Brushes.Gray : Brushes.Black;
+            senderTextBox.BorderThickness = new Thickness(0,0,0,state ? 1 : 3);
         }
 
         private void Settings_MouseDown(object sender, MouseButtonEventArgs e)
@@ -72,8 +80,19 @@ namespace TicketApp.User_controls
             if (HeaderField.Text == "" || HeaderField.Text == _startingHead || BodyField.Text == "" ||
                 BodyField.Text == _startingBody)
             {
-                Switcher.Switch(new LoadingScreen(Form));
+                NotificationWidget();
             }
+            else
+            {
+                var emailMsg = new EmailMsg(HeaderField.Text, BodyField.Text);
+                MainWindow.DataInfo.Add(emailMsg);
+                Switcher.Switch(new LoadingScreen(emailMsg));
+            }
+        }
+
+        private void NotificationWidget()
+        {
+            throw new NotImplementedException();
         }
 
         private void SendButton_OnMouseEnter(object sender, MouseEventArgs e)

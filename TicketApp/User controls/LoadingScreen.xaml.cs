@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using TicketApp.Class;
 using WPFCustomMessageBox;
 
 namespace TicketApp.User_controls
@@ -31,51 +33,29 @@ namespace TicketApp.User_controls
                 LoadingLabel.Content = val;
         }
 
-        public LoadingScreen(Form form)
+        public LoadingScreen(EmailMsg emailMsg)
         {
             InitializeComponent();
             LoadingLabel.Content = "Sending ticket...";
-            var answer = SendEmail(form).Result;
-            if (answer)
-            {
-                if(MessageBox.Show("Ticket submitted successfully", "Successful", MessageBoxButton.OK,
-                    MessageBoxImage.Information) == MessageBoxResult.OK)
-                    Switcher.Switch(new MainPage());
-            }
+            var answer = Email.SendEmailForm(emailMsg);
+            LoadingLabel.Content = $"Result: {answer.Result.StatusCode}";
         }
 
-        private async Task<bool> SendEmail(Form form)
-        {
-            try
-            {
-                var result = await SendEmailForm(form);
-                if (result.StatusCode == HttpStatusCode.Accepted)
-                {
-                    LoadingLabel.Content = "Sent successfully";
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message failed to send\nEnsure you are connected to the internet",
-                    "Message send error", MessageBoxButton.OK, MessageBoxImage.Error);
-                var _ = new Error(ex);
-                return false; 
-            }
-        }
+        //public LoadingScreen(Form form)
+        //{
+        //    InitializeComponent();
+        //    Thread.Sleep(200);
+        //    LoadingLabel.Content = "Sending ticket...";
+        //    var answer = SendEmail(form).Result;
+        //    if (answer)
+        //    {
+        //        if (MessageBox.Show("Ticket submitted successfully", "Successful", MessageBoxButton.OK,
+        //            MessageBoxImage.Information) == MessageBoxResult.OK)
+        //        {
 
-        private async Task<Response> SendEmailForm(Form form)
-        {
-            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? "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";
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress(form.getFromAddress(), form.getUserName());
-            var to = new EmailAddress(form.getToAddress());
-            var subject = form.getHeading();
-            var body = form.getBody();
-            var htmlBody = $"<strong>{form.getBody()}</strong>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, body, htmlBody);
-            return await client.SendEmailAsync(msg);
-        }
+        //        }
+        //            //Switcher.Switch(new MainPage());
+        //    }
+        //}
     }
 }
