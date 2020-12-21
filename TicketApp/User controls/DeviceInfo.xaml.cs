@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using TicketApp.Class;
 
 namespace TicketApp.User_controls
-{.
+{
     /// <summary>
     /// Interaction logic for DeviceInfo.xaml
     /// </summary>
